@@ -1,1 +1,183 @@
 @import "tailwindcss";
+
+:root {
+    color-scheme: dark;
+
+    /* --- Core MD3 roles (dark scheme, primary surface) --- */
+    --md-primary: #6BF0D6;
+    --md-on-primary: #00382E;
+    --md-primary-container: #005142;
+    --md-on-primary-container: #8AFCE1;
+  
+    --md-secondary: #B2CCC5;
+    --md-on-secondary: #1D352F;
+    --md-secondary-container: #334B45;
+    --md-on-secondary-container: #CEE9E1;
+  
+    --md-tertiary: #A9C8E8;
+    --md-on-tertiary: #0C2F45;
+    --md-tertiary-container: #26455D;
+    --md-on-tertiary-container: #CDE5FF;
+  
+    --md-error: #FFB4AB;
+    --md-on-error: #690005;
+    --md-error-container: #93000A;
+    --md-on-error-container: #FFDAD6;
+  
+    --md-surface: #0E1513;
+    --md-surface-dim: #0A100E;
+    --md-surface-bright: #303836;
+    --md-surface-container-lowest: #090F0D;
+    --md-surface-container-low: #161D1B;
+    --md-surface-container: #1A211F;
+    --md-surface-container-high: #242B29;
+    --md-surface-container-highest: #2F3634;
+  
+    --md-on-surface: #E0E3E1;
+    --md-on-surface-variant: #BFC9C5;
+    --md-outline: #899590;
+    --md-outline-variant: #3F4946;
+  
+    --md-inverse-surface: #E0E3E1;
+    --md-inverse-on-surface: #1B211F;
+    --md-inverse-primary: #006B59;
+  
+    --md-scrim: #000000;
+    --md-shadow: #000000;
+  
+    /* --- Shape scale --- */
+    --md-shape-none: 0px;
+    --md-shape-xs: 4px;
+    --md-shape-sm: 8px;
+    --md-shape-md: 12px;
+    --md-shape-lg: 16px;
+    --md-shape-xl: 28px;
+    --md-shape-full: 999px;
+  
+    /* --- Elevation (dark-surface tint approximation) --- */
+    --md-elevation-1: 0 1px 2px 0 rgba(0,0,0,0.30), 0 1px 3px 1px rgba(0,0,0,0.15);
+    --md-elevation-2: 0 1px 2px 0 rgba(0,0,0,0.30), 0 2px 6px 2px rgba(0,0,0,0.15);
+    --md-elevation-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.30);
+    --md-elevation-4: 0 6px 10px 4px rgba(0,0,0,0.15), 0 2px 3px 0 rgba(0,0,0,0.30);
+  
+    /* --- Motion (MD3 easing) --- */
+    --md-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --md-easing-emphasized: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --md-easing-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --md-duration-short: 150ms;
+    --md-duration-medium: 300ms;
+    --md-duration-long: 500ms;
+  
+    /* --- Type: display face for slide headlines, body face for content,
+       mono for telemetry/data callouts --- */
+    --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+@theme inline {
+    --color-md-primary: var(--md-primary);
+    --color-md-on-primary: var(--md-on-primary);
+    --color-md-primary-container: var(--md-primary-container);
+    --color-md-on-primary-container: var(--md-on-primary-container);
+    
+    --color-md-secondary: var(--md-secondary);
+    --color-md-on-secondary: var(--md-on-secondary);
+    --color-md-secondary-container: var(--md-secondary-container);
+    --color-md-on-secondary-container: var(--md-on-secondary-container);
+    
+    --color-md-tertiary: var(--md-tertiary);
+    --color-md-on-tertiary: var(--md-on-tertiary);
+    --color-md-tertiary-container: var(--md-tertiary-container);
+    --color-md-on-tertiary-container: var(--md-on-tertiary-container);
+    
+    --color-md-error: var(--md-error);
+    --color-md-on-error: var(--md-on-error);
+    --color-md-error-container: var(--md-error-container);
+    --color-md-on-error-container: var(--md-on-error-container);
+    
+    --color-md-surface: var(--md-surface);
+    --color-md-surface-dim: var(--md-surface-dim);
+    --color-md-surface-bright: var(--md-surface-bright);
+    --color-md-surface-container-lowest: var(--md-surface-container-lowest);
+    --color-md-surface-container-low: var(--md-surface-container-low);
+    --color-md-surface-container: var(--md-surface-container);
+    --color-md-surface-container-high: var(--md-surface-container-high);
+    --color-md-surface-container-highest: var(--md-surface-container-highest);
+    
+    --color-md-on-surface: var(--md-on-surface);
+    --color-md-on-surface-variant: var(--md-on-surface-variant);
+    --color-md-outline: var(--md-outline);
+    --color-md-outline-variant: var(--md-outline-variant);
+    
+    --font-display: var(--font-display);
+    --font-body: var(--font-body);
+    --font-mono: var(--font-mono);
+    
+    --radius-md-xs: var(--md-shape-xs);
+    --radius-md-sm: var(--md-shape-sm);
+    --radius-md-md: var(--md-shape-md);
+    --radius-md-lg: var(--md-shape-lg);
+    --radius-md-xl: var(--md-shape-xl);
+    --radius-md-full: var(--md-shape-full);
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    font-family: var(--font-body);
+}
+
+/* Reveal.js theming overrides — the deck lives inside .reveal, so we
+   restyle it with MD3 roles instead of loading a stock reveal theme. */
+.reveal {
+    height: 100%;
+    font-family: var(--font-body);
+    color: var(--md-on-surface);
+}
+
+.reveal .slides {
+    text-align: left;
+}
+
+.reveal .slides section {
+    height: 100%;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--md-on-surface);
+}
+
+.reveal .progress {
+    color: var(--md-primary);
+    height: 3px;
+}
+
+.reveal .controls {
+    color: var(--md-primary);
+}
+
+::selection {
+    background: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
