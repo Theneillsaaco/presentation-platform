@@ -4,7 +4,7 @@
     interface Props {
         animation?: AnimationName;
         index?: number;
-        as: string;
+        as?: string;
         class?: string;
         children?: import("svelte").Snippet;
     }
