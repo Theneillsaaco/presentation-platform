@@ -1,0 +1,18 @@
+---
+import PresentationLayout  from "@/layouts/PresentationLayout.astro";
+import Deck from "@/components/Deck.svelte";
+import { listDeckSlugs, loadDeck } from "@/lib/content/decks";
+
+export function getStaticPaths() {
+    return listDeckSlugs().map(slug => ({
+      params: { deck: slug },
+      props: { deck: loadDeck(slug) }
+    }));
+}
+
+const { deck } = Astro.props;
+---
+
+<PresentationLayout title={deck.title}>
+    <Deck deck={deck} client:only="svelte" />
+</PresentationLayout>
