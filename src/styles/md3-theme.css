@@ -1,0 +1,121 @@
+/**
+ * GENERATED FILE — do not hand-edit.
+ * Produced by scripts/generate-theme.mjs from seed #00E5C7
+ * using the real MD3 dynamic color algorithm (HCT + TonalSpot variant).
+ * Regenerate with: npm run gen-theme
+ */
+
+:root,
+:root[data-theme="dark"] {
+  --md-primary-palette-key-color: #2f8474;
+  --md-secondary-palette-key-color: #637c75;
+  --md-tertiary-palette-key-color: #5c7b92;
+  --md-neutral-palette-key-color: #727876;
+  --md-neutral-variant-palette-key-color: #6f7976;
+  --md-background: #0e1513;
+  --md-on-background: #dee4e1;
+  --md-surface: #0e1513;
+  --md-surface-dim: #0e1513;
+  --md-surface-bright: #343b38;
+  --md-surface-container-lowest: #090f0e;
+  --md-surface-container-low: #171d1b;
+  --md-surface-container: #1b211f;
+  --md-surface-container-high: #252b29;
+  --md-surface-container-highest: #303634;
+  --md-on-surface: #dee4e1;
+  --md-surface-variant: #3f4946;
+  --md-on-surface-variant: #bec9c5;
+  --md-inverse-surface: #dee4e1;
+  --md-inverse-on-surface: #2b3230;
+  --md-outline: #89938f;
+  --md-outline-variant: #3f4946;
+  --md-shadow: #000000;
+  --md-scrim: #000000;
+  --md-surface-tint: #84d6c3;
+  --md-primary: #84d6c3;
+  --md-on-primary: #00382f;
+  --md-primary-container: #005045;
+  --md-on-primary-container: #a0f2df;
+  --md-inverse-primary: #046b5c;
+  --md-secondary: #b1ccc4;
+  --md-on-secondary: #1c352f;
+  --md-secondary-container: #334b46;
+  --md-on-secondary-container: #cde8e0;
+  --md-tertiary: #abcae4;
+  --md-on-tertiary: #123348;
+  --md-tertiary-container: #2b4a5f;
+  --md-on-tertiary-container: #c9e6ff;
+  --md-error: #ffb4ab;
+  --md-on-error: #690005;
+  --md-error-container: #93000a;
+  --md-on-error-container: #ffdad6;
+  --md-primary-fixed: #a0f2df;
+  --md-primary-fixed-dim: #84d6c3;
+  --md-on-primary-fixed: #00201b;
+  --md-on-primary-fixed-variant: #005045;
+  --md-secondary-fixed: #cde8e0;
+  --md-secondary-fixed-dim: #b1ccc4;
+  --md-on-secondary-fixed: #06201b;
+  --md-on-secondary-fixed-variant: #334b46;
+  --md-tertiary-fixed: #c9e6ff;
+  --md-tertiary-fixed-dim: #abcae4;
+  --md-on-tertiary-fixed: #001e2f;
+  --md-on-tertiary-fixed-variant: #2b4a5f;
+}
+
+:root[data-theme="light"] {
+  --md-primary-palette-key-color: #2f8474;
+  --md-secondary-palette-key-color: #637c75;
+  --md-tertiary-palette-key-color: #5c7b92;
+  --md-neutral-palette-key-color: #727876;
+  --md-neutral-variant-palette-key-color: #6f7976;
+  --md-background: #f5fbf7;
+  --md-on-background: #171d1b;
+  --md-surface: #f5fbf7;
+  --md-surface-dim: #d5dbd8;
+  --md-surface-bright: #f5fbf7;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #eff5f2;
+  --md-surface-container: #e9efec;
+  --md-surface-container-high: #e3eae6;
+  --md-surface-container-highest: #dee4e1;
+  --md-on-surface: #171d1b;
+  --md-surface-variant: #dae5e0;
+  --md-on-surface-variant: #3f4946;
+  --md-inverse-surface: #2b3230;
+  --md-inverse-on-surface: #ecf2ef;
+  --md-outline: #6f7976;
+  --md-outline-variant: #bec9c5;
+  --md-shadow: #000000;
+  --md-scrim: #000000;
+  --md-surface-tint: #046b5c;
+  --md-primary: #046b5c;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #a0f2df;
+  --md-on-primary-container: #005045;
+  --md-inverse-primary: #84d6c3;
+  --md-secondary: #4a635d;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #cde8e0;
+  --md-on-secondary-container: #334b46;
+  --md-tertiary: #436278;
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #c9e6ff;
+  --md-on-tertiary-container: #2b4a5f;
+  --md-error: #ba1a1a;
+  --md-on-error: #ffffff;
+  --md-error-container: #ffdad6;
+  --md-on-error-container: #93000a;
+  --md-primary-fixed: #a0f2df;
+  --md-primary-fixed-dim: #84d6c3;
+  --md-on-primary-fixed: #00201b;
+  --md-on-primary-fixed-variant: #005045;
+  --md-secondary-fixed: #cde8e0;
+  --md-secondary-fixed-dim: #b1ccc4;
+  --md-on-secondary-fixed: #06201b;
+  --md-on-secondary-fixed-variant: #334b46;
+  --md-tertiary-fixed: #c9e6ff;
+  --md-tertiary-fixed-dim: #abcae4;
+  --md-on-tertiary-fixed: #001e2f;
+  --md-on-tertiary-fixed-variant: #2b4a5f;
+}

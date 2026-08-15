@@ -1,183 +1,340 @@
 @import "tailwindcss";
+@import "./md3-theme.css";
+
+/* ==========================================================================
+   Material Design 3 — token system
+   Color roles above come from md3-theme.css (generated — see
+   scripts/generate-theme.mjs). Everything below is hand-authored:
+   shape scale, motion, elevation, and the full MD3 type scale.
+   ========================================================================== */
 
 :root {
-    color-scheme: dark;
+  color-scheme: dark;
 
-    /* --- Core MD3 roles (dark scheme, primary surface) --- */
-    --md-primary: #6BF0D6;
-    --md-on-primary: #00382E;
-    --md-primary-container: #005142;
-    --md-on-primary-container: #8AFCE1;
-  
-    --md-secondary: #B2CCC5;
-    --md-on-secondary: #1D352F;
-    --md-secondary-container: #334B45;
-    --md-on-secondary-container: #CEE9E1;
-  
-    --md-tertiary: #A9C8E8;
-    --md-on-tertiary: #0C2F45;
-    --md-tertiary-container: #26455D;
-    --md-on-tertiary-container: #CDE5FF;
-  
-    --md-error: #FFB4AB;
-    --md-on-error: #690005;
-    --md-error-container: #93000A;
-    --md-on-error-container: #FFDAD6;
-  
-    --md-surface: #0E1513;
-    --md-surface-dim: #0A100E;
-    --md-surface-bright: #303836;
-    --md-surface-container-lowest: #090F0D;
-    --md-surface-container-low: #161D1B;
-    --md-surface-container: #1A211F;
-    --md-surface-container-high: #242B29;
-    --md-surface-container-highest: #2F3634;
-  
-    --md-on-surface: #E0E3E1;
-    --md-on-surface-variant: #BFC9C5;
-    --md-outline: #899590;
-    --md-outline-variant: #3F4946;
-  
-    --md-inverse-surface: #E0E3E1;
-    --md-inverse-on-surface: #1B211F;
-    --md-inverse-primary: #006B59;
-  
-    --md-scrim: #000000;
-    --md-shadow: #000000;
-  
-    /* --- Shape scale --- */
-    --md-shape-none: 0px;
-    --md-shape-xs: 4px;
-    --md-shape-sm: 8px;
-    --md-shape-md: 12px;
-    --md-shape-lg: 16px;
-    --md-shape-xl: 28px;
-    --md-shape-full: 999px;
-  
-    /* --- Elevation (dark-surface tint approximation) --- */
-    --md-elevation-1: 0 1px 2px 0 rgba(0,0,0,0.30), 0 1px 3px 1px rgba(0,0,0,0.15);
-    --md-elevation-2: 0 1px 2px 0 rgba(0,0,0,0.30), 0 2px 6px 2px rgba(0,0,0,0.15);
-    --md-elevation-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.30);
-    --md-elevation-4: 0 6px 10px 4px rgba(0,0,0,0.15), 0 2px 3px 0 rgba(0,0,0,0.30);
-  
-    /* --- Motion (MD3 easing) --- */
-    --md-easing-standard: cubic-bezier(0.2, 0, 0, 1);
-    --md-easing-emphasized: cubic-bezier(0.3, 0, 0.8, 0.15);
-    --md-easing-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
-    --md-duration-short: 150ms;
-    --md-duration-medium: 300ms;
-    --md-duration-long: 500ms;
-  
-    /* --- Type: display face for slide headlines, body face for content,
-       mono for telemetry/data callouts --- */
-    --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
-    --font-body: "Inter", system-ui, sans-serif;
-    --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  /* --- Shape scale --- */
+  --md-shape-none: 0px;
+  --md-shape-xs: 4px;
+  --md-shape-sm: 8px;
+  --md-shape-md: 12px;
+  --md-shape-lg: 16px;
+  --md-shape-xl: 28px;
+  --md-shape-full: 999px;
+
+  /* --- Elevation: real MD3 uses a surface-tint overlay (surface color
+     blended with the primary/tint color at increasing opacity per level)
+     PLUS a shadow — not shadow alone. color-mix() gives us the overlay
+     without extra DOM nodes. --- */
+  --md-elevation-tint-0: 0%;
+  --md-elevation-tint-1: 5%;
+  --md-elevation-tint-2: 8%;
+  --md-elevation-tint-3: 11%;
+  --md-elevation-tint-4: 12%;
+  --md-elevation-tint-5: 14%;
+
+  --md-elevation-shadow-1: 0 1px 2px 0 rgba(0,0,0,0.30), 0 1px 3px 1px rgba(0,0,0,0.15);
+  --md-elevation-shadow-2: 0 1px 2px 0 rgba(0,0,0,0.30), 0 2px 6px 2px rgba(0,0,0,0.15);
+  --md-elevation-shadow-3: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.30);
+  --md-elevation-shadow-4: 0 6px 10px 4px rgba(0,0,0,0.15), 0 2px 3px 0 rgba(0,0,0,0.30);
+  --md-elevation-shadow-5: 0 8px 12px 6px rgba(0,0,0,0.15), 0 4px 4px 0 rgba(0,0,0,0.30);
+
+  /* --- State layers: MD3 fixes these opacities for hover/focus/pressed/dragged --- */
+  --md-state-hover: 8%;
+  --md-state-focus: 10%;
+  --md-state-pressed: 10%;
+  --md-state-dragged: 16%;
+
+  /* --- Motion (MD3 easing) --- */
+  --md-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-easing-standard-decel: cubic-bezier(0, 0, 0, 1);
+  --md-easing-standard-accel: cubic-bezier(0.3, 0, 1, 1);
+  --md-easing-emphasized: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --md-easing-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --md-easing-emphasized-accel: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --md-duration-short: 150ms;
+  --md-duration-medium: 300ms;
+  --md-duration-long: 500ms;
+  --md-duration-theme-switch: 600ms;
+
+  /* --- Type faces --- */
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
 }
 
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* ==========================================================================
+   Tailwind v4 theme mapping — every MD3 role + the full 15-style type
+   scale become Tailwind utilities (bg-md-primary, text-display-large, ...)
+   ========================================================================== */
 @theme inline {
-    --color-md-primary: var(--md-primary);
-    --color-md-on-primary: var(--md-on-primary);
-    --color-md-primary-container: var(--md-primary-container);
-    --color-md-on-primary-container: var(--md-on-primary-container);
-    
-    --color-md-secondary: var(--md-secondary);
-    --color-md-on-secondary: var(--md-on-secondary);
-    --color-md-secondary-container: var(--md-secondary-container);
-    --color-md-on-secondary-container: var(--md-on-secondary-container);
-    
-    --color-md-tertiary: var(--md-tertiary);
-    --color-md-on-tertiary: var(--md-on-tertiary);
-    --color-md-tertiary-container: var(--md-tertiary-container);
-    --color-md-on-tertiary-container: var(--md-on-tertiary-container);
-    
-    --color-md-error: var(--md-error);
-    --color-md-on-error: var(--md-on-error);
-    --color-md-error-container: var(--md-error-container);
-    --color-md-on-error-container: var(--md-on-error-container);
-    
-    --color-md-surface: var(--md-surface);
-    --color-md-surface-dim: var(--md-surface-dim);
-    --color-md-surface-bright: var(--md-surface-bright);
-    --color-md-surface-container-lowest: var(--md-surface-container-lowest);
-    --color-md-surface-container-low: var(--md-surface-container-low);
-    --color-md-surface-container: var(--md-surface-container);
-    --color-md-surface-container-high: var(--md-surface-container-high);
-    --color-md-surface-container-highest: var(--md-surface-container-highest);
-    
-    --color-md-on-surface: var(--md-on-surface);
-    --color-md-on-surface-variant: var(--md-on-surface-variant);
-    --color-md-outline: var(--md-outline);
-    --color-md-outline-variant: var(--md-outline-variant);
-    
-    --font-display: var(--font-display);
-    --font-body: var(--font-body);
-    --font-mono: var(--font-mono);
-    
-    --radius-md-xs: var(--md-shape-xs);
-    --radius-md-sm: var(--md-shape-sm);
-    --radius-md-md: var(--md-shape-md);
-    --radius-md-lg: var(--md-shape-lg);
-    --radius-md-xl: var(--md-shape-xl);
-    --radius-md-full: var(--md-shape-full);
+  /* Color roles (54, generated) */
+  --color-md-primary: var(--md-primary);
+  --color-md-on-primary: var(--md-on-primary);
+  --color-md-primary-container: var(--md-primary-container);
+  --color-md-on-primary-container: var(--md-on-primary-container);
+  --color-md-inverse-primary: var(--md-inverse-primary);
+  --color-md-primary-fixed: var(--md-primary-fixed);
+  --color-md-primary-fixed-dim: var(--md-primary-fixed-dim);
+  --color-md-on-primary-fixed: var(--md-on-primary-fixed);
+  --color-md-on-primary-fixed-variant: var(--md-on-primary-fixed-variant);
+
+  --color-md-secondary: var(--md-secondary);
+  --color-md-on-secondary: var(--md-on-secondary);
+  --color-md-secondary-container: var(--md-secondary-container);
+  --color-md-on-secondary-container: var(--md-on-secondary-container);
+  --color-md-secondary-fixed: var(--md-secondary-fixed);
+  --color-md-secondary-fixed-dim: var(--md-secondary-fixed-dim);
+  --color-md-on-secondary-fixed: var(--md-on-secondary-fixed);
+  --color-md-on-secondary-fixed-variant: var(--md-on-secondary-fixed-variant);
+
+  --color-md-tertiary: var(--md-tertiary);
+  --color-md-on-tertiary: var(--md-on-tertiary);
+  --color-md-tertiary-container: var(--md-tertiary-container);
+  --color-md-on-tertiary-container: var(--md-on-tertiary-container);
+  --color-md-tertiary-fixed: var(--md-tertiary-fixed);
+  --color-md-tertiary-fixed-dim: var(--md-tertiary-fixed-dim);
+  --color-md-on-tertiary-fixed: var(--md-on-tertiary-fixed);
+  --color-md-on-tertiary-fixed-variant: var(--md-on-tertiary-fixed-variant);
+
+  --color-md-error: var(--md-error);
+  --color-md-on-error: var(--md-on-error);
+  --color-md-error-container: var(--md-error-container);
+  --color-md-on-error-container: var(--md-on-error-container);
+
+  --color-md-background: var(--md-background);
+  --color-md-on-background: var(--md-on-background);
+  --color-md-surface: var(--md-surface);
+  --color-md-surface-dim: var(--md-surface-dim);
+  --color-md-surface-bright: var(--md-surface-bright);
+  --color-md-surface-container-lowest: var(--md-surface-container-lowest);
+  --color-md-surface-container-low: var(--md-surface-container-low);
+  --color-md-surface-container: var(--md-surface-container);
+  --color-md-surface-container-high: var(--md-surface-container-high);
+  --color-md-surface-container-highest: var(--md-surface-container-highest);
+  --color-md-surface-variant: var(--md-surface-variant);
+  --color-md-surface-tint: var(--md-surface-tint);
+
+  --color-md-on-surface: var(--md-on-surface);
+  --color-md-on-surface-variant: var(--md-on-surface-variant);
+  --color-md-outline: var(--md-outline);
+  --color-md-outline-variant: var(--md-outline-variant);
+
+  --color-md-inverse-surface: var(--md-inverse-surface);
+  --color-md-inverse-on-surface: var(--md-inverse-on-surface);
+
+  --color-md-scrim: var(--md-scrim);
+  --color-md-shadow: var(--md-shadow);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  --radius-md-xs: var(--md-shape-xs);
+  --radius-md-sm: var(--md-shape-sm);
+  --radius-md-md: var(--md-shape-md);
+  --radius-md-lg: var(--md-shape-lg);
+  --radius-md-xl: var(--md-shape-xl);
+  --radius-md-full: var(--md-shape-full);
+
+  /* --- MD3 type scale: 15 styles (Display/Headline/Title/Body/Label × L/M/S).
+     Tailwind v4 pairs a font-size var with its line-height via the
+     "--text-{name}--line-height" companion key. --- */
+  --text-display-large: 3.5625rem;      /* 57px */
+  --text-display-large--line-height: 4rem;
+  --text-display-medium: 2.8125rem;     /* 45px */
+  --text-display-medium--line-height: 3.25rem;
+  --text-display-small: 2.25rem;        /* 36px */
+  --text-display-small--line-height: 2.75rem;
+
+  --text-headline-large: 2rem;          /* 32px */
+  --text-headline-large--line-height: 2.5rem;
+  --text-headline-medium: 1.75rem;      /* 28px */
+  --text-headline-medium--line-height: 2.25rem;
+  --text-headline-small: 1.5rem;        /* 24px */
+  --text-headline-small--line-height: 2rem;
+
+  --text-title-large: 1.375rem;         /* 22px */
+  --text-title-large--line-height: 1.75rem;
+  --text-title-medium: 1rem;            /* 16px */
+  --text-title-medium--line-height: 1.5rem;
+  --text-title-medium--letter-spacing: 0.009375em;
+  --text-title-small: 0.875rem;         /* 14px */
+  --text-title-small--line-height: 1.25rem;
+  --text-title-small--letter-spacing: 0.00625em;
+
+  --text-body-large: 1rem;              /* 16px */
+  --text-body-large--line-height: 1.5rem;
+  --text-body-large--letter-spacing: 0.03125em;
+  --text-body-medium: 0.875rem;         /* 14px */
+  --text-body-medium--line-height: 1.25rem;
+  --text-body-medium--letter-spacing: 0.015625em;
+  --text-body-small: 0.75rem;           /* 12px */
+  --text-body-small--line-height: 1rem;
+  --text-body-small--letter-spacing: 0.025em;
+
+  --text-label-large: 0.875rem;         /* 14px */
+  --text-label-large--line-height: 1.25rem;
+  --text-label-large--letter-spacing: 0.00625em;
+  --text-label-medium: 0.75rem;         /* 12px */
+  --text-label-medium--line-height: 1rem;
+  --text-label-medium--letter-spacing: 0.03125em;
+  --text-label-small: 0.6875rem;        /* 11px */
+  --text-label-small--line-height: 1rem;
+  --text-label-small--letter-spacing: 0.03125em;
 }
 
+/* ==========================================================================
+   Base
+   ========================================================================== */
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: var(--md-surface);
-    color: var(--md-on-surface);
-    font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font-family: var(--font-body);
 }
 
-/* Reveal.js theming overrides — the deck lives inside .reveal, so we
-   restyle it with MD3 roles instead of loading a stock reveal theme. */
-.reveal {
-    height: 100%;
-    font-family: var(--font-body);
-    color: var(--md-on-surface);
+/* Whole-page color-swap transition: any element whose background/text
+   color depends on a --md-* role fades smoothly when data-theme flips.
+   Combined with the View Transitions API in ThemeToggle.svelte, this
+   gives a full circular "wipe" between schemes; browsers without View
+   Transitions support fall back to this plain cross-fade. */
+* {
+  transition:
+    background-color var(--md-duration-theme-switch) var(--md-easing-standard),
+    border-color var(--md-duration-theme-switch) var(--md-easing-standard),
+    color var(--md-duration-theme-switch) var(--md-easing-standard);
 }
 
-.reveal .slides {
-    text-align: left;
-}
-
-.reveal .slides section {
-    height: 100%;
-}
-
-.reveal h1,
-.reveal h2,
-.reveal h3 {
-    font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    text-transform: none;
-    color: var(--md-on-surface);
-}
-
-.reveal .progress {
-    color: var(--md-primary);
-    height: 3px;
-}
-
-.reveal .controls {
-    color: var(--md-primary);
-}
-
-::selection {
-    background: var(--md-primary-container);
-    color: var(--md-on-primary-container);
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--md-duration-theme-switch);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-    }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   Elevation utilities — surface-tint overlay (color-mix) + shadow,
+   matching MD3's actual elevation model instead of shadow-only.
+   ========================================================================== */
+.md-elevation-0 { background-color: var(--md-surface); box-shadow: none; }
+.md-elevation-1 {
+  background-color: color-mix(in srgb, var(--md-surface) calc(100% - var(--md-elevation-tint-1)), var(--md-surface-tint) var(--md-elevation-tint-1));
+  box-shadow: var(--md-elevation-shadow-1);
+}
+.md-elevation-2 {
+  background-color: color-mix(in srgb, var(--md-surface) calc(100% - var(--md-elevation-tint-2)), var(--md-surface-tint) var(--md-elevation-tint-2));
+  box-shadow: var(--md-elevation-shadow-2);
+}
+.md-elevation-3 {
+  background-color: color-mix(in srgb, var(--md-surface) calc(100% - var(--md-elevation-tint-3)), var(--md-surface-tint) var(--md-elevation-tint-3));
+  box-shadow: var(--md-elevation-shadow-3);
+}
+.md-elevation-4 {
+  background-color: color-mix(in srgb, var(--md-surface) calc(100% - var(--md-elevation-tint-4)), var(--md-surface-tint) var(--md-elevation-tint-4));
+  box-shadow: var(--md-elevation-shadow-4);
+}
+.md-elevation-5 {
+  background-color: color-mix(in srgb, var(--md-surface) calc(100% - var(--md-elevation-tint-5)), var(--md-surface-tint) var(--md-elevation-tint-5));
+  box-shadow: var(--md-elevation-shadow-5);
+}
+
+/* ==========================================================================
+   State layer utility — MD3's fixed hover/focus/pressed opacities as a
+   pseudo-element overlay, so components don't each invent their own
+   hover color. Apply .md-state-layer to any `position: relative` element
+   with a `--md-state-layer-color` custom property set (defaults to
+   currentColor).
+   ========================================================================== */
+.md-state-layer {
+  position: relative;
+  isolation: isolate;
+}
+.md-state-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--md-state-layer-color, currentColor);
+  opacity: 0;
+  transition: opacity var(--md-duration-short) var(--md-easing-standard);
+  pointer-events: none;
+  z-index: -1;
+}
+.md-state-layer:hover::before { opacity: var(--md-state-hover); }
+.md-state-layer:focus-visible::before { opacity: var(--md-state-focus); }
+.md-state-layer:active::before { opacity: var(--md-state-pressed); }
+
+/* ==========================================================================
+   Reveal.js theming — restyled with MD3 roles + type scale instead of a
+   stock reveal theme.
+   ========================================================================== */
+.reveal {
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  color: var(--md-on-surface);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides section {
+  height: 100%;
+}
+
+.reveal h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-display-small);
+  line-height: var(--text-display-small--line-height);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--md-on-surface);
+}
+
+.reveal h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-headline-medium);
+  line-height: var(--text-headline-medium--line-height);
+  font-weight: 600;
+  text-transform: none;
+  color: var(--md-on-surface);
+}
+
+.reveal h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-title-large);
+  line-height: var(--text-title-large--line-height);
+  font-weight: 600;
+  text-transform: none;
+  color: var(--md-on-surface);
+}
+
+.reveal .progress {
+  color: var(--md-primary);
+  height: 3px;
+}
+
+.reveal .controls {
+  color: var(--md-primary);
+}
+
+::selection {
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
 }

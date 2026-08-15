@@ -9,11 +9,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen-theme": "bun scripts/generate-theme.mjs",
+    "new-deck": "bun scripts/new-deck.mjs"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",
     "@iconify-json/material-symbols": "^1.2.88",
+    "@material/material-color-utilities": "^0.4.0",
     "@tailwindcss/vite": "^4.3.3",
     "@twodft/astro-icon": "^1.2.4",
     "@types/node": "^26.2.0",
