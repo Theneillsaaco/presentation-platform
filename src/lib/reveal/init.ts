@@ -47,7 +47,7 @@ export function getDeck(): RevealApi | null {
   return deck;
 }
 
-export function destroyDeck() {
+export function destroyReveal() {
   deck?.destroy();
   deck = null;
 }
