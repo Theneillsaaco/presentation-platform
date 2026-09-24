@@ -1,18 +1,89 @@
 ---
-import PresentationLayout  from "@/layouts/PresentationLayout.astro";
-import Deck from "@/components/Deck.svelte";
-import { listDeckSlugs, loadDeck } from "@/lib/content/decks";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import PresentationLayout from "@/layouts/PresentationLayout.astro";
+import SlideSection, { type ResolvedSlide } from "@/components/SlideSection.astro";
+import { listDeckSlugs, loadDeckStructure, slideContentId, assetUrl } from "@/lib/content/decks";
+import type { SlideStructure } from "@/lib/content/types";
 
 export function getStaticPaths() {
     return listDeckSlugs().map(slug => ({
-      params: { deck: slug },
-      props: { deck: loadDeck(slug) }
+        params: { deck: slug },
+        props: { deck: loadDeckStructure(slug) }
     }));
 }
 
 const { deck } = Astro.props;
+
+const allContent = await getCollection("slideContent");
+const contentById = new Map<string, CollectionEntry<"slideContent">>(allContent.map((entry: CollectionEntry<"slideContent">) => [entry.id, entry]));
+
+async function resolveSlide(slide: SlideStructure): Promise<ResolvedSlide> {
+    if (slide.stack?.length) {
+        const children = await Promise.all(slide.stack.map(resolveSlide));
+        return { ...slide, children };
+    }
+
+    const id = slideContentId(deck.slug, slide.id);
+    const entry = contentById.get(id);
+
+    if (!entry) {
+        throw new Error(
+            `Slide content not found: "${slide.id}" for deck "${deck.slug}".` +
+            `Try to create a markdown file in "src/content/slideContent/${id}.md (or mdx)"`
+        );
+    }
+
+    const { Content } = await render(entry);
+
+    return {
+        ...slide,
+        Content,
+        backgroundImageUrl: slide.background?.image
+            ? assetUrl(deck.slug, slide.background.image)
+            : undefined,
+        backgroundVideoUrl: slide.background?.video
+            ? assetUrl(deck.slug, slide.background.video)
+            : undefined,
+    };
+}   
+
+const renderedSlides = await Promise.all(deck.slides.map(resolveSlide));
+
+function countLeaves(slides: ResolvedSlide[]): number {
+  return slides.reduce((sum, s) => sum + (s.children ? countLeaves(s.children) : 1), 0);
+}
+
+const totalSlides = countLeaves(renderedSlides);
 ---
 
 <PresentationLayout title={deck.title}>
-    <Deck deck={deck} client:only="svelte" />
+    <div
+        class="reveal"
+        data-deck-slug={deck.slug}
+        data-total-slides={totalSlides}
+        data-transition={deck.transition}
+        data-loop={deck.loop ? "true" : undefined}
+        data-theme={deck.theme}
+    >
+        <div class="slides">
+            {renderedSlides.map(slide => <SlideSection slide={slide} />)}
+        </div>
+    </div>
+
+    <script>
+        import { initReveal } from "@/lib/reveal/init";
+
+        const el = document.querySelector<HTMLElement>(".reveal[data-deck-slug]");
+        if (el) {
+            const transition = el.dataset.transition as
+              | "none" | "fade" | "slide" | "convex" | "concave" | "zoom" | undefined;
+
+            initReveal({
+                deckSlug: el.dataset.deckSlug!,
+                totalSlides: Number(el.dataset.totalSlides ?? 0),
+                transition,
+                loop: el.dataset.loop === "true",
+            });
+        }
+    </script>
 </PresentationLayout>

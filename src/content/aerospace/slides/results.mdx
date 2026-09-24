@@ -1,0 +1,9 @@
+import BarChart from "@/components/content/BarChart.svelte";
+
+## Resultados — coeficiente de arrastre por iteración
+
+<BarChart
+  client:load
+  labels={["Gen 1", "Gen 2", "Gen 3", "Gen 4", "Gen 5"]}
+  series={[{ name: "Cd", values: [0.31, 0.27, 0.24, 0.21, 0.19] }]}
+/>

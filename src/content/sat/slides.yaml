@@ -1,0 +1,10 @@
+title: SAT — plantilla de ejemplo
+
+slides:
+  - id: intro
+    type: title
+    animation: fade
+
+  - id: how-to
+    type: content
+    animation: stagger

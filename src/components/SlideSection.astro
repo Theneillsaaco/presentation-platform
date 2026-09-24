@@ -1,0 +1,43 @@
+---
+import SlideFrame from "@/components/SlideFrame.astro";
+import SlideSection from "@/components/SlideSection.astro";
+import type { SlideStructure } from "@/lib/content/types";
+
+export interface ResolvedSlide extends SlideStructure {
+    Content?: any;
+    backgroundImageUrl?: string;
+    backgroundVideoUrl?: string;
+    children?: ResolvedSlide[];
+}
+
+interface Props {
+    slide: ResolvedSlide;
+}
+
+const { slide } = Astro.props;
+const { background } = slide;
+---
+
+<section
+    data-slide-id={slide.id}
+    data-theme={slide.theme}
+    data-transition={slide.transition}
+    data-autoslide={slide.autoSlide}
+    data-visibility={slide.hidden ? "hidden" : undefined}
+    data-background-color={background?.color}
+    data-background-image={slide.backgroundImageUrl}
+    data-background-video={slide.backgroundVideoUrl}
+    data-background-size={background?.size}
+    data-background-opacity={background?.opacity}
+    data-background-video-loop={background?.loop ? "true" : undefined}
+>
+    {
+        slide.children ? (
+            slide.children.map(child => <SlideSection slide={child} />)
+        ) : (
+            <SlideFrame type={slide.type!} animation={slide.animation}>
+                {slide.Content && <slide.Content />}
+            </SlideFrame> 
+        )
+    }
+</section>

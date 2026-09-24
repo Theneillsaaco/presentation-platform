@@ -1,0 +1,25 @@
+title: AeroCEM — Optimización aerodinámica computacional
+transition: fade   # deck-wide default; una slide puede pisarlo con su propio `transition`
+
+slides:
+  - id: intro
+    type: title
+    animation: fade
+
+  - id: concepts
+    type: content
+    animation: stagger
+
+  - id: architecture-image
+    type: image
+    animation: zoom
+
+  - id: results
+    type: chart
+    theme: light        # esta slide en particular se ve en claro, sin importar el toggle global
+
+  - id: closing
+    type: content
+    animation: slide
+    background:
+      color: "var(--md-tertiary-container)"   # cualquier color CSS válido, incluye nuestras variables MD3

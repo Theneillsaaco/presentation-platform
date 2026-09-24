@@ -54,11 +54,11 @@
             onfocus={() => (focused = true)}
             onblur={() => (focused = false)}
             class="h-14 w-full rounded-md-xs border bg-transparent px-3 text-body-large text-md-on-surface outline-none
-                transition-colors duration-150 ease-[cubic-bezier(0.2,0,0,1)]
-                disabled:opacity-38 disabled:pointer-events-none
-                {error
-                  ? 'border-md-error focus:border-md-error'
-                  : 'border-md-outline focus:border-md-primary focus:border-2'}"
+              transition-colors duration-150 ease-[cubic-bezier(0.2,0,0,1)]
+              disabled:opacity-38 disabled:pointer-events-none
+              {error
+                ? 'border-md-error focus:border-md-error'
+                : 'border-md-outline focus:border-md-primary focus:border-2'}"
         />
     </div>
     

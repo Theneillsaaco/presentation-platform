@@ -1,0 +1,17 @@
+---
+import AnimatedCard from "@/components/ui/AnimatedCard.svelte";
+import type { SlideType } from "@/lib/content/types";
+
+interface Props {
+    type: SlideType;
+    animation?: "fade" | "zoom" | "slide" | "stagger" | "reveal" | "none";
+}
+
+const { type, animation = "fade" } = Astro.props;
+---
+
+<div class={`slide-frame slide-frame--${type}`}>
+    <AnimatedCard client:load animation={animation} class="slide-prose h-full">
+        <slot />
+    </AnimatedCard>
+</div>

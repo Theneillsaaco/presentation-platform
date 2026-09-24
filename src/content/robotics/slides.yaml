@@ -1,0 +1,26 @@
+title: Brazo robótico de 6 ejes
+loop: true   # vuelve a la primera slide después de la última
+
+slides:
+  - id: intro
+    type: title
+    animation: fade
+    autoSlide: 6000   # avanza sola a los 6s — solo esta slide, el resto es manual
+
+  - id: stack
+    type: content
+    animation: stagger
+    transition: convex   # pisa el transition por defecto del deck solo para entrar/salir de esta slide
+
+  - id: arm-demo
+    type: video
+    animation: zoom
+
+  # Stack vertical: "calibration" (↓) y "calibration-notes" son la MISMA
+  # posición horizontal en el deck — se navegan con ↑/↓ en vez de ←/→.
+  - id: calibration-group
+    stack:
+      - id: calibration
+        type: chart
+      - id: calibration-notes
+        type: content
