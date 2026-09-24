@@ -1,0 +1,13 @@
+---
+notes: Datos de AeroCEM. Cada generación es una iteración del optimizador; menor Cd es mejor. Bajar con la flecha para ver la otra gráfica.
+---
+
+import LineChart from "@/components/content/LineChart.svelte";
+
+## Convergencia del optimizador (↓ hay otra gráfica)
+
+<LineChart
+  client:load
+  labels={["Gen 1", "Gen 2", "Gen 3", "Gen 4", "Gen 5"]}
+  series={[{ name: "Cd", values: [0.31, 0.27, 0.24, 0.21, 0.19] }]}
+/>

@@ -1,0 +1,308 @@
+/* ==========================================================================
+   slides.css — everything that styles a *slide*: Reveal theming, frames per
+   `type`, and the markdown/MDX prose. Imported by PresentationLayout after
+   global.css. Uses only MD3 tokens from global.css / md3-theme.css.
+   ========================================================================== */
+
+/* Any element can rebind the palette with data-theme (per-slide / per-deck). */
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* --------------------------------------------------------------------------
+   Reveal.js theming (MD3 roles + type scale instead of a stock theme).
+   reveal.css hardcodes .reveal-viewport { background:#fff; color:#000 };
+   same specificity, and this file loads later, so it wins without !important.
+   -------------------------------------------------------------------------- */
+.reveal-viewport {
+  background-color: var(--md-surface);
+  color: var(--md-on-surface);
+}
+
+.reveal {
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  color: var(--md-on-surface);
+}
+
+.reveal .slides { text-align: left; }
+.reveal .slides section { height: 100%; }
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: none;
+  color: var(--md-on-surface);
+}
+.reveal h1 { font-size: var(--text-display-small); line-height: var(--text-display-small--line-height); letter-spacing: -0.01em; }
+.reveal h2 { font-size: var(--text-headline-medium); line-height: var(--text-headline-medium--line-height); }
+.reveal h3 { font-size: var(--text-title-large); line-height: var(--text-title-large--line-height); }
+
+.reveal .progress { color: var(--md-primary); height: 3px; }
+.reveal .controls { color: var(--md-primary); }
+.reveal .slide-number {
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-medium);
+}
+
+::selection { background: var(--md-primary-container); color: var(--md-on-primary-container); }
+
+/* --------------------------------------------------------------------------
+   Frames. slides.yaml `type` picks one. SlideFrame renders
+   .slide-frame > .slide-prose[data-slide-content] > (markdown output).
+   -------------------------------------------------------------------------- */
+.slide-frame {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 5rem;
+}
+
+.slide-frame > .slide-prose {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+/* title: cover. Large h1, first paragraph reads as subtitle. */
+.slide-frame--title > .slide-prose { gap: 1.5rem; }
+.slide-frame--title h1 {
+  font-size: var(--text-display-medium);
+  line-height: var(--text-display-medium--line-height);
+  letter-spacing: -0.02em;
+  max-width: 46rem;
+  margin: 0;
+}
+.slide-frame--title h1 + p {
+  font-size: var(--text-title-large);
+  line-height: var(--text-title-large--line-height);
+  max-width: 38rem;
+}
+
+/* section: chapter divider. */
+.slide-frame--section > .slide-prose { gap: 1rem; }
+.slide-frame--section h1,
+.slide-frame--section h2 {
+  font-size: var(--text-display-large);
+  line-height: var(--text-display-large--line-height);
+  letter-spacing: -0.02em;
+  color: var(--md-primary);
+  margin: 0;
+}
+.slide-frame--section p { font-size: var(--text-title-large); }
+
+/* split: heading on top, then two blocks side by side (text | code/chart/image). */
+.slide-frame--split > .slide-prose {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  grid-auto-rows: min-content;
+  align-content: center;
+  align-items: center;
+  column-gap: 3rem;
+  row-gap: 1.5rem;
+}
+.slide-frame--split > .slide-prose > :is(h1, h2, h3) { grid-column: 1 / -1; margin: 0; }
+
+/* quote: one big statement + attribution paragraph. */
+.slide-frame--quote > .slide-prose { gap: 1.5rem; }
+.slide-frame--quote blockquote {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.75rem;
+  border-left: 4px solid var(--md-primary);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: var(--text-display-small);
+  line-height: 1.25;
+  color: var(--md-on-surface);
+  max-width: 52rem;
+}
+.slide-frame--quote blockquote p {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  max-width: none;
+  margin: 0;
+}
+.slide-frame--quote blockquote + p {
+  font-family: var(--font-mono);
+  font-size: var(--text-label-large);
+  padding-left: calc(1.75rem + 4px);
+}
+
+/* code: one block, as large as it can be. */
+.slide-frame--code pre { font-size: 1.05rem; line-height: 1.6; }
+
+.slide-frame--image,
+.slide-frame--video { padding: 3rem 4rem; gap: 1rem; }
+.slide-frame--chart { padding: 3rem 4rem; }
+
+.slide-frame--image .slide-prose img,
+.slide-frame--video .slide-prose video { flex: 1; min-height: 0; }
+.slide-frame--image .slide-prose p:last-child,
+.slide-frame--video .slide-prose p:last-child {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-small);
+  max-width: none;
+}
+
+/* --------------------------------------------------------------------------
+   .slide-prose — typography for markdown/MDX output.
+   -------------------------------------------------------------------------- */
+.slide-prose h1 { font-family: var(--font-display); font-size: var(--text-display-small); line-height: var(--text-display-small--line-height); font-weight: 600; color: var(--md-on-surface); margin: 0 0 0.5rem; }
+.slide-prose h2 { font-family: var(--font-display); font-size: var(--text-headline-medium); line-height: var(--text-headline-medium--line-height); font-weight: 600; color: var(--md-on-surface); margin: 0 0 0.5rem; }
+.slide-prose h3 { font-family: var(--font-display); font-size: var(--text-title-large); line-height: var(--text-title-large--line-height); font-weight: 600; color: var(--md-on-surface); margin: 0 0 0.5rem; }
+
+.slide-prose p {
+  font-size: var(--text-body-large);
+  line-height: var(--text-body-large--line-height);
+  color: var(--md-on-surface-variant);
+  max-width: 48rem;
+  margin: 0;
+}
+
+.slide-prose ul,
+.slide-prose ol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 48rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.slide-prose li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: var(--text-body-large);
+  line-height: var(--text-body-large--line-height);
+  color: var(--md-on-surface-variant);
+}
+.slide-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--md-shape-full);
+  background: var(--md-primary);
+}
+.slide-prose ol { counter-reset: slide-ol; }
+.slide-prose ol > li { counter-increment: slide-ol; }
+.slide-prose ol > li::before {
+  content: counter(slide-ol) ".";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-label-medium);
+  color: var(--md-primary);
+}
+
+.slide-prose strong { color: var(--md-on-surface); font-weight: 600; }
+.slide-prose a { color: var(--md-primary); text-underline-offset: 0.15em; }
+
+.slide-prose img {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: var(--md-shape-lg);
+  object-fit: contain;
+  background: var(--md-surface-container-low);
+}
+.slide-prose video {
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: var(--md-shape-lg);
+  background: #000;
+}
+
+.slide-prose blockquote {
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--md-primary);
+  color: var(--md-on-surface-variant);
+  font-style: italic;
+}
+
+/* Inline code, keyboard keys, tables. */
+.slide-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--md-surface-container-high);
+  padding: 0.1em 0.4em;
+  border-radius: var(--md-shape-xs);
+}
+.slide-prose kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.15em 0.55em;
+  color: var(--md-on-surface);
+  background: var(--md-surface-container-high);
+  border: 1px solid var(--md-outline-variant);
+  border-bottom-width: 2px;
+  border-radius: var(--md-shape-xs);
+}
+.slide-prose table { width: 100%; border-collapse: collapse; font-size: var(--text-body-large); }
+.slide-prose th,
+.slide-prose td { padding: 0.6rem 1rem 0.6rem 0; text-align: left; border-bottom: 1px solid var(--md-outline-variant); color: var(--md-on-surface-variant); }
+.slide-prose th { font-family: var(--font-mono); font-size: var(--text-label-large); font-weight: 500; color: var(--md-on-surface); }
+
+/* Fenced code (Astro/Shiki). Always a dark panel, in light slides too. */
+.slide-prose pre {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: left;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-lg);
+}
+.slide-prose pre code { padding: 0; font-size: inherit; background: none; border-radius: 0; }
+
+/* --------------------------------------------------------------------------
+   Utilities for raw HTML inside .md slides (no imports needed).
+     <div class="cols-3"><div class="card">...</div>...</div>
+   -------------------------------------------------------------------------- */
+.slide-prose .cols-2,
+.slide-prose .cols-3 { display: grid; gap: 1.25rem; max-width: none; align-items: stretch; }
+.slide-prose .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.slide-prose .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.slide-prose .card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--md-surface-container-low);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-lg);
+}
+.slide-prose .card h3 { margin: 0; }
+.slide-prose .card p { font-size: var(--text-body-medium); line-height: var(--text-body-medium--line-height); }
+.slide-prose .card code { background: var(--md-surface-container-highest); }
+.slide-prose .card.accent { background: var(--md-primary-container); border-color: transparent; }
+.slide-prose .card.accent :is(h3, p, strong) { color: var(--md-on-primary-container); }
+
+.slide-prose .stat .num {
+  font-family: var(--font-display);
+  font-size: var(--text-display-medium);
+  line-height: 1;
+  font-weight: 600;
+  color: var(--md-primary);
+}
+.slide-prose .muted { color: var(--md-on-surface-variant); }
+.slide-prose .mono { font-family: var(--font-mono); font-size: var(--text-label-large); }

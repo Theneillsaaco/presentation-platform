@@ -1,17 +1,21 @@
 ---
-import AnimatedCard from "@/components/ui/AnimatedCard.svelte";
-import type { SlideType } from "@/lib/content/types";
+import type { SlideAnimation, SlideType } from "@/lib/content/types";
 
 interface Props {
     type: SlideType;
-    animation?: "fade" | "zoom" | "slide" | "stagger" | "reveal" | "none";
+    animation?: SlideAnimation;
 }
 
 const { type, animation = "fade" } = Astro.props;
 ---
 
-<div class={`slide-frame slide-frame--${type}`}>
-    <AnimatedCard client:load animation={animation} class="slide-prose h-full">
+<!--
+  Pure markup, zero JS. The entrance animation is driven by
+  lib/animations/runtime.ts (called from lib/reveal/init.ts) via data-animation,
+  so it plays when the slide becomes current, not at page load.
+-->
+<div class={`slide-frame slide-frame--${type}`} data-animation={animation}>
+    <div class="slide-prose" data-slide-content>
         <slot />
-    </AnimatedCard>
+    </div>
 </div>

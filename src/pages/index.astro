@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css";
-import { loadAllDeckStructures } from "@/lib/content/decks";
+import { loadAllDeckStructures, countSlides } from "@/lib/content/decks";
 import ThemeToggle from "@/components/ui/ThemeToggle.svelte";
 import Layout from "@/layouts/Layout.astro";
 
@@ -11,7 +11,7 @@ const decks = loadAllDeckStructures();
     <section class="min-h-screen bg-md-surface px-8 py-16 text-md-on-surface">
         <div class="mx-auto max-w-3xl">
             <div class="flex items-start justify-between">
-                <p class="font-mono text-label-large uppercase tracking-[0.2em] text-md-primary">
+                <p class="font-mono text-label-large text-md-primary">
                     Presentation Platform
                 </p>
                 <ThemeToggle client:load />
@@ -38,8 +38,8 @@ const decks = loadAllDeckStructures();
                                     {deck.title}
                                 </span>
                                 
-                                <span class="block font-mono text-label-small text-md-on-surface-variant">
-                                    {deck.slides.length} slides · /{deck.slug}
+                                <span class="mt-1 block font-mono text-label-small text-md-on-surface-variant">
+                                    {countSlides(deck.slides)} slides · /{deck.slug}
                                 </span>
                             </span>
 

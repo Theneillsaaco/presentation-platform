@@ -1,0 +1,17 @@
+---
+notes: Datos del brazo robótico. La muñeca fue la más difícil de estabilizar.
+---
+
+import BarChart from "@/components/content/BarChart.svelte";
+
+## Error de posicionamiento tras calibrar
+
+<BarChart
+  client:load
+  unit=" mm"
+  labels={["Muñeca", "Codo", "Hombro", "Base"]}
+  series={[
+    { name: "Antes", values: [4.2, 2.8, 1.9, 1.1] },
+    { name: "Después", values: [0.6, 0.5, 0.4, 0.3] },
+  ]}
+/>

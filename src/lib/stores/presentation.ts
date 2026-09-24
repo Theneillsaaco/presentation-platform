@@ -1,11 +1,13 @@
 import { writable } from "svelte/store";
 
 export interface PresentationState {
-  deckSlug: string | null; 
+  deckSlug: string | null;
   currentSlideId: string | null;
+  /** 0-based position among navigable slides (stack children count). */
   currentIndex: number;
   totalSlides: number;
   isFullScreen: boolean;
+  isOverview: boolean;
 }
 
 const initialState: PresentationState = {
@@ -14,14 +16,19 @@ const initialState: PresentationState = {
   currentIndex: 0,
   totalSlides: 0,
   isFullScreen: false,
+  isOverview: false,
 };
 
 export const presentationState = writable<PresentationState>(initialState);
 
 export function setCurrentSlide(id: string, index: number) {
-  presentationState.update(s => ({ ...s, currentSlideId: id, currentIndex: index }));
+  presentationState.update((s) => ({ ...s, currentSlideId: id, currentIndex: index }));
 }
 
-export function resetPresentation(deckSlug: string, totalSlides: number) {
+export function patchPresentation(patch: Partial<PresentationState>) {
+  presentationState.update((s) => ({ ...s, ...patch }));
+}
+
+export function resetPresentation(deckSlug: string, totalSlides = 0) {
   presentationState.set({ ...initialState, deckSlug, totalSlides });
 }

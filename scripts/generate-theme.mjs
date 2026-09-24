@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
  * Generates src/styles/md3-theme.css from a single seed color using the
- * real Material Design 3 dynamic color algorithm — not hand-picked hex
- * values. Uses @material/material-color-utilities (Google's own
- * implementation of the HCT color space + tonal palette generation).
+ * real Material Design 3 dynamic color algorithm (HCT + TonalSpot).
  *
- * Run manually with `npm run gen-theme`, or change SEED_COLOR and rerun.
- * Regenerating is required after changing the seed; nothing here reads
- * from user input at request-time (colors are fixed per build).
+ * Run with `bun run gen-theme` after changing SEED_COLOR.
+ *
+ * Selectors are attribute-only ([data-theme=...]) rather than :root[...],
+ * so ANY element can rebind the palette. That is what makes per-slide
+ * `theme: light|dark` in slides.yaml and deck-level `theme:` work.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -19,46 +19,41 @@ import {
   MaterialDynamicColors,
 } from "@material/material-color-utilities";
 
-// Signal-cyan seed — telemetry/HUD feel for aerospace/robotics/technical decks.
+// Signal-cyan seed: telemetry/HUD feel for aerospace/robotics/technical decks.
 const SEED_COLOR = "#00E5C7";
-const CONTRAST_LEVEL = 0; // 0 = standard MD3 contrast. Range is -1 (min) to 1 (max).
+const CONTRAST_LEVEL = 0; // -1 (min) .. 1 (max), 0 = standard MD3
 
-// camelCase role name -> kebab-case CSS custom property name
-function toKebab(name) {
-  return name.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
-}
+const toKebab = (name) => name.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
 
 function buildSchemeVars(scheme) {
-  const roleNames = Object.keys(MaterialDynamicColors).filter(
-    (k) => typeof MaterialDynamicColors[k]?.getArgb === "function"
-  );
-
-  const lines = [];
-  for (const role of roleNames) {
-    const argb = MaterialDynamicColors[role].getArgb(scheme);
-    lines.push(`  --md-${toKebab(role)}: ${hexFromArgb(argb)};`);
-  }
-  return lines.join("\n");
+  return Object.keys(MaterialDynamicColors)
+    .filter((k) => typeof MaterialDynamicColors[k]?.getArgb === "function")
+    .map((role) => `  --md-${toKebab(role)}: ${hexFromArgb(MaterialDynamicColors[role].getArgb(scheme))};`)
+    .join("\n");
 }
 
 const sourceHct = Hct.fromInt(argbFromHex(SEED_COLOR));
-const lightScheme = new SchemeTonalSpot(sourceHct, false, CONTRAST_LEVEL);
-const darkScheme = new SchemeTonalSpot(sourceHct, true, CONTRAST_LEVEL);
+const light = new SchemeTonalSpot(sourceHct, false, CONTRAST_LEVEL);
+const dark = new SchemeTonalSpot(sourceHct, true, CONTRAST_LEVEL);
 
 const css = `/**
  * GENERATED FILE — do not hand-edit.
  * Produced by scripts/generate-theme.mjs from seed ${SEED_COLOR}
  * using the real MD3 dynamic color algorithm (HCT + TonalSpot variant).
- * Regenerate with: npm run gen-theme
+ * Regenerate with: bun run gen-theme
+ *
+ * [data-theme] (not :root[data-theme]) so any element can rebind the palette.
+ * Dark is also the default with no attribute at all. Light comes second so it
+ * wins on equal specificity when both a parent and the element are set.
  */
 
 :root,
-:root[data-theme="dark"] {
-${buildSchemeVars(darkScheme)}
+[data-theme="dark"] {
+${buildSchemeVars(dark)}
 }
 
-:root[data-theme="light"] {
-${buildSchemeVars(lightScheme)}
+[data-theme="light"] {
+${buildSchemeVars(light)}
 }
 `;
 

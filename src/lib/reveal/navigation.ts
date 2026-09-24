@@ -1,28 +1,29 @@
 import { getDeck } from "./init";
+import type { NotesPlugin } from "reveal.js/plugin/notes";
 
 /**
- * This is the seam the AI flow described in planning hooks into later:
+ * The seam the AI flow described in planning hooks into later:
  *
  *   mic -> whisper -> transcript -> gemma -> classifier -> { section, confidence }
  *   classifier calls slideManager.goTo(section) when confidence clears
  *   AI_CONFIDENCE_THRESHOLD (see lib/stores/ai.ts).
  *
- * For now it's driven manually / by UI controls, so the deck is fully
- * usable before any AI wiring exists.
+ * For now it's driven by keyboard / DeckHud, so the deck is fully usable
+ * before any AI wiring exists.
  */
 export const slideManager = {
-  /** Jump to a slide by its `id` (the `id` field in slides.yaml). */
+  /** Jump to a slide by its `id` (the `id` field in slides.yaml). Works inside vertical stacks. */
   goTo(slideId: string): boolean {
     const deck = getDeck();
     if (!deck) return false;
 
-    const target = deck
-      .getSlides()
-      .findIndex((el) => el.dataset.slideId === slideId);
+    const target = deck.getSlides().find((el) => el.dataset.slideId === slideId);
+    if (!target) return false;
 
-    if (target === -1) return false;
-
-    deck.slide(target);
+    // Reveal indexes are (horizontal, vertical), NOT a flat list, so a flat
+    // findIndex breaks as soon as the deck has a stack.
+    const { h, v } = deck.getIndices(target);
+    deck.slide(h, v);
     return true;
   },
 
@@ -34,11 +35,15 @@ export const slideManager = {
     getDeck()?.prev();
   },
 
-  goToIndex(index: number): void {
-    getDeck()?.slide(index);
+  toggleOverview(): void {
+    getDeck()?.toggleOverview();
   },
 
-  getCurrentIndex(): number {
-    return getDeck()?.getIndices().h ?? 0;
+  openNotes(): void {
+    (getDeck()?.getPlugin("notes") as NotesPlugin | undefined)?.open();
+  },
+
+  getCurrentSlideId(): string | null {
+    return getDeck()?.getCurrentSlide()?.dataset.slideId ?? null;
   },
 };

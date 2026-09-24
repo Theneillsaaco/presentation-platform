@@ -1,9 +1,10 @@
 ---
-import "reveal.js/reveal.css"
-import "@/styles/global.css"
+import "reveal.js/reveal.css";
+import "@/styles/global.css";
+import "@/styles/slides.css";
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -11,13 +12,25 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="es">
-    <head>
-    	<meta charset="utf-8" />
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    	
-    	<title>{title}</title>
-    </head>
-    <body>
-        <slot />
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    <!-- Same no-flash theme bootstrap as Layout.astro -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("md3-theme");
+          document.documentElement.dataset.theme = stored === "light" ? "light" : "dark";
+        } catch (e) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>

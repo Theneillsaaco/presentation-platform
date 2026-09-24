@@ -1,0 +1,20 @@
+---
+notes: Esto es hoja de ruta, no algo ya hecho. El punto de entrada goTo ya existe y funciona; falta conectar la voz.
+---
+
+import Pipeline from "@/components/content/Pipeline.svelte";
+
+## Siguiente paso: navegar hablando
+
+El punto de entrada ya existe: `slideManager.goTo(id)`. Falta conectar la voz.
+
+<Pipeline
+  client:load
+  steps={[
+    { label: "Micrófono", detail: "audio en el navegador" },
+    { label: "Whisper", detail: "voz a texto" },
+    { label: "Gemma", detail: "interpreta la frase" },
+    { label: "Clasificador", detail: "slide y confianza" },
+    { label: "goTo(id)", detail: "salta a la slide" },
+  ]}
+/>

@@ -1,0 +1,72 @@
+title: Presentation Platform
+description: Markdown para el contenido, YAML para la estructura, Reveal.js para el escenario.
+transition: slide          # transición por defecto del deck
+defaults:                  # se aplica a toda slide que no lo defina
+  animation: fade
+
+slides:
+  - id: intro
+    type: title
+    animation: reveal
+    transition: fade
+    background:
+      gradient: "linear-gradient(135deg, var(--md-primary-container) 0%, var(--md-surface) 65%)"
+
+  - id: why
+    type: content
+    animation: stagger
+
+  - id: anatomy
+    type: split
+    animation: slide
+
+  - id: layouts
+    type: content
+    animation: zoom
+
+  - id: chapter-live
+    type: section
+    transition: convex
+    background:
+      gradient: "linear-gradient(160deg, var(--md-surface-container-high) 0%, var(--md-surface) 70%)"
+
+  - id: animation-lab
+    type: content
+
+  - id: theme
+    type: content
+
+  # Stack vertical: ambas viven en la MISMA posición horizontal (↓ / ↑ para moverse).
+  - id: results-group
+    stack:
+      - id: convergence
+        type: chart
+        animation: reveal
+      - id: calibration
+        type: chart
+
+  - id: voice
+    type: content
+
+  - id: navigation-code
+    type: code
+
+  - id: shortcuts
+    type: content
+    animation: stagger
+
+  - id: principle
+    type: quote
+    theme: light            # esta slide fuerza tema claro, sin importar el toggle
+
+  - id: closing
+    type: title
+    animation: zoom
+    transition: zoom
+    background:
+      gradient: "linear-gradient(135deg, var(--md-tertiary-container) 0%, var(--md-surface) 65%)"
+
+  # Slide de respaldo: fuera del flujo normal, accesible en /platform#/reference
+  - id: reference
+    type: content
+    hidden: true

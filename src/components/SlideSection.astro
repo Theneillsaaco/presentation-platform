@@ -5,6 +5,8 @@ import type { SlideStructure } from "@/lib/content/types";
 
 export interface ResolvedSlide extends SlideStructure {
     Content?: any;
+    /** Speaker notes from the slide's frontmatter. */
+    notes?: string;
     backgroundImageUrl?: string;
     backgroundVideoUrl?: string;
     children?: ResolvedSlide[];
@@ -18,13 +20,21 @@ const { slide } = Astro.props;
 const { background } = slide;
 ---
 
+<!--
+    `id` gives Reveal readable hashes (#/results instead of #/3).
+    `data-slide-theme` (not data-theme) is read by init.ts, which rebinds the
+    MD3 variables on the viewport so the letterbox background follows too.
+-->
 <section
+    id={slide.id}
+    class={slide.class}
     data-slide-id={slide.id}
-    data-theme={slide.theme}
+    data-slide-theme={slide.theme}
     data-transition={slide.transition}
     data-autoslide={slide.autoSlide}
     data-visibility={slide.hidden ? "hidden" : undefined}
     data-background-color={background?.color}
+    data-background-gradient={background?.gradient}
     data-background-image={slide.backgroundImageUrl}
     data-background-video={slide.backgroundVideoUrl}
     data-background-size={background?.size}
@@ -33,11 +43,14 @@ const { background } = slide;
 >
     {
         slide.children ? (
-            slide.children.map(child => <SlideSection slide={child} />)
-        ) : (
+            slide.children.map((child) => <SlideSection slide={child} />)
+    ) : (
+        <>
             <SlideFrame type={slide.type!} animation={slide.animation}>
                 {slide.Content && <slide.Content />}
-            </SlideFrame> 
-        )
-    }
+            </SlideFrame>
+            {slide.notes && <aside class="notes">{slide.notes}</aside>}
+        </>
+    )
+  }
 </section>

@@ -2,11 +2,15 @@
  * GENERATED FILE — do not hand-edit.
  * Produced by scripts/generate-theme.mjs from seed #00E5C7
  * using the real MD3 dynamic color algorithm (HCT + TonalSpot variant).
- * Regenerate with: npm run gen-theme
+ * Regenerate with: bun run gen-theme
+ *
+ * [data-theme] (not :root[data-theme]) so any element can rebind the palette.
+ * Dark is also the default with no attribute at all. Light comes second so it
+ * wins on equal specificity when both a parent and the element are set.
  */
 
 :root,
-:root[data-theme="dark"] {
+[data-theme="dark"] {
   --md-primary-palette-key-color: #2f8474;
   --md-secondary-palette-key-color: #637c75;
   --md-tertiary-palette-key-color: #5c7b92;
@@ -63,7 +67,7 @@
   --md-on-tertiary-fixed-variant: #2b4a5f;
 }
 
-:root[data-theme="light"] {
+[data-theme="light"] {
   --md-primary-palette-key-color: #2f8474;
   --md-secondary-palette-key-color: #637c75;
   --md-tertiary-palette-key-color: #5c7b92;
